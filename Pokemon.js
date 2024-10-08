@@ -1,3 +1,4 @@
+const { efectividades, Types } = require("./Types");
 class Pokemon {
   constructor(Name, HPMAX, HP, move, type, Attackstat, Defense) {
     this.Name = Name;
@@ -14,18 +15,17 @@ class Pokemon {
       console.log("1." + this.move[0].name + " Power: " + this.move[0].power);
       console.log("2." + this.move[1].name + " Power: " + this.move[1].power);
       let opcion = readlineSync.question("");
+      let movimientoelegido=this.move[opcion-1];
+
+      console.log(movimientoelegido);
+      if (efectividades[movimientoelegido.type].effective.includes(PokemonIA.type)) {
+        console.log("Es super eficaz");
+      }
       let randomFactor = 0.85 + Math.random() * (1.0 - 0.85);
-      let Damage =
-        (this.Attackstat / PokemonIA.Defense) *
-        this.move[opcion - 1].power *
-        randomFactor;
-      console.log(
-        "Tu pokemon llamado " +
-          this.Name +
-          " ha hecho: " +
-          Math.floor(Damage) +
-          " de daño"
-      );
+      let Damage =Math.floor((this.Attackstat / PokemonIA.Defense) * this.move[opcion - 1].power * randomFactor);
+      console.log("¡" + this.Name + " usó " + this.move[opcion - 1].name + "!");
+      console.log("¡Hizo " + Damage + " de daños!");
+
       PokemonIA.HP = PokemonIA.HP - Math.floor(Damage);
       if (isNaN(PokemonIA.HP) || PokemonIA.HP < 0) {
         PokemonIA.HP = 0;
@@ -33,17 +33,9 @@ class Pokemon {
     } else if (!Jugador) {
       let opcion = Math.floor(Math.random() * 2) + 1;
       let randomFactor = 0.85 + Math.random() * (1.0 - 0.85);
-      let Damage =
-        (this.Attackstat / PokemonIA.Defense) *
-        this.move[opcion - 1].power *
-        randomFactor;
-      console.log(
-        "El pokemon rival llamado " +
-          this.Name +
-          " ha hecho: " +
-          Math.floor(Damage) +
-          " de daño"
-      );
+      let Damage =Math.floor( (this.Attackstat / PokemonIA.Defense) * this.move[opcion - 1].power * randomFactor);
+      console.log("¡" + this.Name + " enemigo usó " + this.move[opcion - 1].name + "!");
+      console.log("¡Hizo " + Damage + " de daños!");
       PokemonIA.HP = PokemonIA.HP - Math.floor(Damage);
       if (isNaN(PokemonIA.HP) || PokemonIA.HP < 0) {
         PokemonIA.HP = 0;
@@ -57,7 +49,7 @@ class Pokemon {
       this.HP = this.HPMAX;
     }
     console.log(
-      "El pokemon llamado " + this.Name + " se ha curado: " + cura + " de vida"
+      this.Name + " se ha curado: " + cura + " de vida"
     );
   }
 }

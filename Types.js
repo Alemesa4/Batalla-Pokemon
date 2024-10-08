@@ -3,4 +3,19 @@ const Types = {
   Water: "Water",
   Grass: "Grass",
 };
-module.exports = Types;
+
+const efectividades={
+  [Types.Fire]:{
+    effective:["Grass"],
+    lesseffective:["Fire","Water"]
+  },
+  [Types.Water]:{
+    effective:["Fire"],
+    lesseffective:["Grass","Water"]
+  },
+  [Types.Grass]:{
+    effective:["Water"],
+    lesseffective:["Grass","Fire"]
+  }
+};
+module.exports = {Types, efectividades };
