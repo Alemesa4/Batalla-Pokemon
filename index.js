@@ -1,18 +1,18 @@
 const readlineSync = require('readline-sync');
 
-const efectividades = require("./Types");
-const Types = require("./Types");
+const { efectividades, Types } = require("./Types");
+
 const Pokemon = require("./Pokemon");
 const Move = require("./Move");
 
-const Flamethrower = new Move("Flamethrower", 60,Types.Fire);
-const HydroPump = new Move("Hydro Pump", 60,Types.Water);
-const SharpBlade = new Move("Sharp Blade", 60,Types.Grass);
-const Tackle = new Move("Tackle", 40,Types.Grass);
+const Flamethrower = new Move("Flamethrower", 80,Types.Fire,100);
+const HydroPump = new Move("Hydro Pump", 120,Types.Water,80);
+const SharpBlade = new Move("Sharp Blade", 80,Types.Grass,100);
+const Tackle = new Move("Tackle", 40,Types.Normal,100);
 
-const Charizard = new Pokemon("Charizard", 160, 160, [Flamethrower, Tackle], Types.Fire, 150, 80);
-const Venasaur = new Pokemon("Venasaur", 180, 180, [SharpBlade, Tackle], Types.Grass, 90, 120);
-const Blastoise = new Pokemon("Blastoise", 170, 170, [HydroPump, Tackle], Types.Water, 120, 100);
+const Charizard = new Pokemon("Charizard", 200, 200, [Flamethrower, Tackle], Types.Fire, 150, 80);
+const Venasaur = new Pokemon("Venasaur", 240, 240, [SharpBlade, Tackle], Types.Grass, 90, 120);
+const Blastoise = new Pokemon("Blastoise", 190, 190, [HydroPump, Tackle], Types.Water, 120, 100);
 let terminado = false;
 let cura = true;
 let numero;
@@ -21,6 +21,7 @@ let curaIA = true;
 let jugador;
 let tupokemon;
 let IAPokemon;
+
 
 console.log("Bienvenido a la batalla pokemon te enfrentaras junto a tu pokemon aleatorio a la maquina con su pokemon aleatorio");
 
