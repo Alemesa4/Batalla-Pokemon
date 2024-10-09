@@ -14,8 +14,8 @@ class Pokemon {
     let multiplicador = 0;
     if (Jugador) {
       console.log("Que movimiento quieres usar");
-      console.log("1." + this.move[0].name + " Power: " + this.move[0].power + " Tipo: ("+ this.move[0].typeM + ") Precision: "+ this.move[0].accuracy+"%");
-      console.log("2." + this.move[1].name + " Power: " + this.move[1].power + " Tipo: ("+ this.move[1].typeM + ") Precision: "+ this.move[1].accuracy+"%");
+      console.log("1." + this.move[0].name + " Power: " + this.move[0].power + " Type: ("+ this.move[0].typeM + ") Accuracy: "+ this.move[0].accuracy+"%");
+      console.log("2." + this.move[1].name + " Power: " + this.move[1].power + " Type: ("+ this.move[1].typeM + ") Accuracy: "+ this.move[1].accuracy+"%");
       let opcion = readlineSync.question("");
       opcion = parseInt(opcion);
       let movimientoelegido = this.move[opcion - 1];
