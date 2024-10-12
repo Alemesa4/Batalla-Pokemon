@@ -9,9 +9,10 @@ class Pokemon {
     this.type = type;
     this.Attackstat = Attackstat;
     this.Defense = Defense;
+    this.vivo= true;
   }
   Attack(PokemonIA, Jugador) {
-    let multiplicador = 0;
+    let multiplicador = 1;
     if (Jugador) {
       console.log("Que movimiento quieres usar");
       console.log("1." + this.move[0].name + " Power: " + this.move[0].power + " Type: ("+ this.move[0].typeM + ") Accuracy: "+ this.move[0].accuracy+"%");
@@ -53,7 +54,7 @@ if (!falla){
         console.log("Tu movimiento ha fallado")
       }
     } else if (!Jugador) {
-      let opcion = Math.floor(Math.random() * 2) + 1;
+      //let opcion = Math.floor(Math.random() * 2) + 1;
       let opcionm=  Math.floor(Math.random() * 2) + 1;
       let movimientoelegido = this.move[opcionm - 1];
 
@@ -69,8 +70,8 @@ if (!falla){
       }
 
       let randomFactor = 0.85 + Math.random() * (1.0 - 0.85);
-      let Damage = Math.floor((this.Attackstat / PokemonIA.Defense) * this.move[opcion - 1].power * randomFactor * multiplicador);
-      console.log("¡" + this.Name + " enemigo usó " + this.move[opcion - 1].name + "!");
+      let Damage = Math.floor((this.Attackstat / PokemonIA.Defense) * this.move[opcionm - 1].power * randomFactor * multiplicador);
+      console.log("¡" + this.Name + " enemigo usó " + this.move[opcionm - 1].name + "!");
       console.log("¡Hizo " + Damage + " de daños!");
       if (efectividades[movimientoelegido.typeM].effective.includes(PokemonIA.type)) {
         console.log("Es super eficaz");

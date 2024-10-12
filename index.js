@@ -5,20 +5,21 @@ const { efectividades, Types } = require("./Types");
 const Pokemon = require("./Pokemon");
 const Move = require("./Move");
 
-const Flamethrower = new Move("Flamethrower", 80,Types.Fire,100);
-const HydroPump = new Move("Hydro Pump", 120,Types.Water,80);
-const SharpBlade = new Move("Sharp Blade", 80,Types.Grass,100);
-const Tackle = new Move("Tackle", 40,Types.Normal,100);
+const Flamethrower = new Move("Flamethrower", 80, Types.Fire, 100);
+const HydroPump = new Move("Hydro Pump", 120, Types.Water, 80);
+const SharpBlade = new Move("Sharp Blade", 80, Types.Grass, 100);
+const Tackle = new Move("Tackle", 40, Types.Normal, 100);
 const Thunderbolt = new Move("Thunderbolt", 90, Types.Electric, 100);
-const Psychic = new Move("Psychic", 80,Types.Psychic, 90);
-const RockSlide = new Move("Rock Slide",Types.Rock, 75, 90);
-const IceBeam = new Move("Ice Beam", 90,Types.Ice, 100);
-const DrainPunch = new Move("Drain Punch", 75,Types.Fighting, 100);
-const DazzlingGleam = new Move("Dazzling Gleam",Types.DazzlingGleam, 80, 100);
-const LeafStorm = new Move("Leaf Storm", 130,Types.Grass, 80);
-const ShadowBall = new Move("Shadow Ball", 80,Types.Ghost, 100);
+const Psychic = new Move("Psychic", 80, Types.Psychic, 100);
+const RockSlide = new Move("Rock Slide", Types.Rock, 75, 90);
+const IceBeam = new Move("Ice Beam", 90, Types.Ice, 100);
+const DrainPunch = new Move("Drain Punch", 75, Types.Fighting, 100);
+const DazzlingGleam = new Move("Dazzling Gleam", Types.Fairy, 80, 100);
+const LeafStorm = new Move("Leaf Storm", 130, Types.Grass, 80);
+const ShadowBall = new Move("Shadow Ball", 80, Types.Ghost, 100);
 const DragonDarts = new Move("Dragon Darts", 100, Types.Dragon, 100);
-const AuraSphere= new Move("Aura Sphere",100, Types.Fighting, 100)
+const AuraSphere = new Move("Aura Sphere", 100, Types.Fighting, 100);
+const Fly = new Move("Fly", 100, Types.Flying, 90);
 
 const Charizard = new Pokemon("Charizard", 360, 360, [Flamethrower, Tackle], Types.Fire, 150, 80);
 const Venusaur = new Pokemon("Venusaur", 370, 370, [SharpBlade, Tackle], Types.Grass, 100, 120);
@@ -31,78 +32,82 @@ const Lapras = new Pokemon("Lapras", 370, 370, [IceBeam, HydroPump], Types.Water
 const Machamp = new Pokemon("Machamp", 350, 350, [DrainPunch, RockSlide], Types.Fighting, 130, 100);
 const Sylveon = new Pokemon("Sylveon", 340, 340, [DazzlingGleam, LeafStorm], Types.Fairy, 100, 130);
 const Lucario = new Pokemon("Lucario", 350, 350, [DrainPunch, AuraSphere], Types.Fighting, 140, 100);
+const Ducklett = new Pokemon("Ducklett", 500, 500, [HydroPump, Fly], Types.Water, 200, 200);
 
 let terminado = false;
 let cura = true;
-let numero;
-let numeroIA;
+let numero = 0;
+let numeroIA = 0;
 let curaIA = true;
 let jugador;
 let tupokemon;
 let IAPokemon;
+let OpPokemon = [Charizard, Venusaur, Blastoise, Pikachu, Alakazam, Machamp, Sylveon, Lapras, Dragapult, Gengar, Lucario, Ducklett];
+let ocombate = 0;
 
-
-console.log("Bienvenido a la batalla pokemon te enfrentaras a la maquina");
-console.log("¿Que tipo de comabte quieres hacer?");
-console.log("1. 1vs1");
-console.log("2. 3vs3");
-let ocombate=readlineSync.question("");
-if(ocombate==1){
-    Batalla1vs1();
-}else if (ocombate==2){
-    Batalla3vs3();
+while (ocombate >= 3 || ocombate <= 0) {
+    console.log("Bienvenido a la batalla pokemon te enfrentaras a la maquina");
+    console.log("¿Que tipo de comabte quieres hacer?");
+    console.log("1. 1vs1");
+    console.log("2. 3vs3");
+    let ocombate = readlineSync.question("");
+    if (ocombate == 1) {
+        Batalla1vs1();
+    } else if (ocombate == 2) {
+        Batalla3vs3();
+    } else {
+        console.log("No es una opcion correcta");
+    }
 }
 
-let OpPokemon = [Charizard, Venusaur, Blastoise,Pikachu,Alakazam,Machamp,Sylveon,Lapras,Dragapult,Gengar,Lucario];
-
-function Batalla1vs1(){
-do {
-tupokemon = OpPokemon[Math.floor(Math.random() * OpPokemon.length)];
-IAPokemon = OpPokemon[Math.floor(Math.random() * OpPokemon.length)];
-} while (IAPokemon==tupokemon);
-console.log("Tu pokemon sera: ")
-console.log(tupokemon);
-console.log("El pokemon rival sera: ")
-console.log(IAPokemon);
-
-do {
-
+function Batalla1vs1() {
     do {
-        console.log("-TU--------------------");
-        console.log(tupokemon.Name + " " + "HP: " + tupokemon.HP + "/" + tupokemon.HPMAX)
-        console.log("-----------------------");
+        tupokemon = OpPokemon[Math.floor(Math.random() * OpPokemon.length)];
+        IAPokemon = OpPokemon[Math.floor(Math.random() * OpPokemon.length)];
+    } while (IAPokemon == tupokemon);
+    console.log("Tu pokemon sera: ")
+    console.log(tupokemon);
+    console.log("El pokemon rival sera: ")
+    console.log(IAPokemon);
 
-        console.log("-RED-------------------");
-        console.log(IAPokemon.Name + " " + "HP: " + IAPokemon.HP + "/" + IAPokemon.HPMAX);
-        console.log("-----------------------");
+    while (!terminado) {
+
+        do {
+            console.log("-TU--------------------");
+            console.log(tupokemon.Name + " " + "HP: " + tupokemon.HP + "/" + tupokemon.HPMAX)
+            console.log("-----------------------");
+
+            console.log("-RED-------------------");
+            console.log(IAPokemon.Name + " " + "HP: " + IAPokemon.HP + "/" + IAPokemon.HPMAX);
+            console.log("-----------------------");
 
 
-        console.log("Que quieres hacer");
-        console.log("1.Atacar");
-        console.log("2.Curar");
+            console.log("Que quieres hacer");
+            console.log("1.Atacar");
+            console.log("2.Curar");
 
-        numero = readlineSync.question('');
-        if (numero == 1) {
-            jugador = true;
-            tupokemon.Attack(IAPokemon, jugador);
-        } else if (numero == 2) {
-            if (cura == false) {
-                console.log("No tienes la cura disponible");
+            numero = readlineSync.question('');
+            if (numero == 1) {
+                jugador = true;
+                tupokemon.Attack(IAPokemon, jugador);
+            } else if (numero == 2) {
+                if (cura == false) {
+                    console.log("No tienes la cura disponible");
+                } else {
+                    tupokemon.Heal();
+                    cura = false;
+                }
             } else {
-                tupokemon.Heal();
-                cura = false;
+                console.log("No es una opcion valida")
             }
-        } else {
-            console.log("No es una opcion valida")
-        }
-    } while (numero > 2 || numero < 1 || (numero = 2 && cura == false) && (IAPokemon.HP!=0 && tupokemon.HP!=0));
+        } while (numero > 2 || numero < 1 || (numero = 2 && cura == false) && (IAPokemon.HP != 0 && tupokemon.HP != 0));
 
         if (IAPokemon.HP == IAPokemon.HPMAX) {
             numeroIA = 1;
-        } else if(curaIA==true) {
+        } else if (curaIA == true) {
             numeroIA = Math.floor(Math.random() * 2) + 1;
-        }else if (curaIA==false){
-            numeroIA=1;
+        } else if (curaIA == false) {
+            numeroIA = 1;
         }
         if (numeroIA == 1) {
             jugador = false;
@@ -114,17 +119,319 @@ do {
             }
 
         }
-       
+
+        if (tupokemon.HP <= 0) {
+            console.log("Has perdido, vuelve a intentar")
+            terminado = true;
+        }
+        if (IAPokemon.HP <= 0) {
+            console.log("Has ganado, FELICIDADES")
+            terminado = true;
+        }
+    }
+}
+function Batalla3vs3() {
+    let tuequipo = [];
+let IAequipo = [];
+let terminado = false;
+
+// Fill up your teams
+while (tuequipo.length < 3) {
+    let randomPokemon = OpPokemon[Math.floor(Math.random() * OpPokemon.length)];
+    if (!tuequipo.includes(randomPokemon)) {
+        tuequipo.push(randomPokemon);
+    }
+}
+
+while (IAequipo.length < 3) {
+    let randomPokemon = OpPokemon[Math.floor(Math.random() * OpPokemon.length)];
+    if (!tuequipo.includes(randomPokemon) && !IAequipo.includes(randomPokemon)) {
+        IAequipo.push(randomPokemon);
+    }
+}
+
+let tupokemon = tuequipo[0];
+let IAPokemon = IAequipo[0];
+let esTurnoJugador = true;
+
+function turnoJugador() {
     if (tupokemon.HP <= 0) {
-        console.log("Has perdido, vuelve a intentar")
-        terminado = true;
+        console.log("Tu Pokemon se ha debilitado");
+        while (true) {
+            console.log("A que pokemon quieres cambiar?");
+            console.log(tuequipo.map((p, index) => `(${index + 1}) ${p.Name} - HP: ${p.HP}/${p.HPMAX}`));
+            let opcionP = parseInt(readlineSync.question("Elige un número del 1 al 3: ")) - 1;
+            if (opcionP < 0 || opcionP >= tuequipo.length || tuequipo[opcionP].HP <= 0) {
+                console.log("Ese pokemon no se puede cambiar");
+            } else {
+                tupokemon = tuequipo[opcionP];
+                console.log("Has cambiado a " + tupokemon.Name);
+                break;
+            }
+        }
     }
+
+    console.log("-TU--------------------");
+    console.log(tupokemon.Name + " " + "HP: " + tupokemon.HP + "/" + tupokemon.HPMAX);
+    console.log("-----------------------");
+    console.log("-RED-------------------");
+    console.log(IAPokemon.Name + " " + "HP: " + IAPokemon.HP + "/" + IAPokemon.HPMAX);
+    console.log("-----------------------");
+
+    console.log("Que quieres hacer?");
+    console.log("1. Atacar");
+    console.log("2. Curar");
+    console.log("3. Cambiar");
+
+    let numero = parseInt(readlineSync.question(''));
+    switch (numero) {
+        case 1:
+            tupokemon.Attack(IAPokemon, true);
+            break;
+        case 2:
+            if (cura == false) {
+                console.log("No tienes la cura disponible");
+            } else {
+                tupokemon.Heal();
+                cura = false;
+            }
+            break;
+        case 3:
+            while (true) {
+                console.log("A que pokemon quieres cambiar?");
+                console.log(tuequipo.map((p, index) => `(${index + 1}) ${p.Name} - HP: ${p.HP}/${p.HPMAX}`));
+                let opcionP = parseInt(readlineSync.question("Elige un número del 1 al 3: ")) - 1;
+                if (opcionP < 0 || opcionP >= tuequipo.length || tupokemon == tuequipo[opcionP]) {
+                    console.log("Ese pokemon no se puede cambiar");
+                } else {
+                    tupokemon = tuequipo[opcionP];
+                    console.log("Has cambiado a " + tupokemon.Name);
+                    break;
+                }
+            }
+            break;
+        default:
+            console.log("No es una opcion valida");
+            break;
+    }
+
+    esTurnoJugador = false;
+}
+
+function turnoIA() {
     if (IAPokemon.HP <= 0) {
-        console.log("Has ganado, FELICIDADES")
+        console.log("El pokemon rival se ha debilitado");
+        while (true) {
+            let opcionPIA = Math.floor(Math.random() * 3);
+            if (IAequipo[opcionPIA].HP > 0) {
+                IAPokemon = IAequipo[opcionPIA];
+                console.log("Tu rival ha cambiado a " + IAPokemon.Name);
+                break;
+            }
+        }
+    }
+
+    let numeroIA = Math.floor(Math.random() * 3) + 1;
+    switch (numeroIA) {
+        case 1:
+            IAPokemon.Attack(tupokemon, false);
+            break;
+        case 2:
+            IAPokemon.Heal();
+            break;
+        case 3:
+            let opcionPIA;
+            while (true) {
+                opcionPIA = Math.floor(Math.random() * 3);
+                if (IAequipo[opcionPIA].HP > 0 && IAPokemon != IAequipo[opcionPIA]) {
+                    IAPokemon = IAequipo[opcionPIA];
+                    console.log("Tu rival ha cambiado a: " + IAPokemon.Name);
+                    break;
+                }
+            }
+            break;
+        default:
+            break;
+    }
+
+    esTurnoJugador = true;
+}
+
+while (!terminado) {
+    if (esTurnoJugador) {
+        turnoJugador();
+    } else {
+        turnoIA();
+    }
+
+    if (tuequipo.every(p => p.HP <= 0)) {
+        console.log("Has perdido");
         terminado = true;
     }
-} while (!terminado);// Cambiarlo a un solo while   
+
+    if (IAequipo.every(p => p.HP <= 0)) {
+        console.log("Has Ganado");
+        terminado = true;
+    }
 }
-function Batalla3vs3(){
-    
+
 }
+//     let tuequipo = [];
+//     let IAequipo = [];
+//     let terminado=false;
+//     while (tuequipo.length < 3) {
+//         let randomPokemon = OpPokemon[Math.floor(Math.random() * OpPokemon.length)];
+
+//         if (!tuequipo.includes(randomPokemon)) {
+//             tuequipo.push(randomPokemon);
+//         }
+//     }
+//     console.log("Este es tu equipo Pokémon: " + JSON.stringify(tuequipo, null, 2));
+
+//     while (IAequipo.length < 3) {
+
+//         let randomPokemon = OpPokemon[Math.floor(Math.random() * OpPokemon.length)];
+
+//         if (!tuequipo.includes(randomPokemon) && !IAequipo.includes(randomPokemon)) {
+//             IAequipo.push(randomPokemon);
+//         }
+//     }
+//     console.log("Este es el equipo al cual vas a enfrentarte: " + IAequipo.map(p => p.Name).join(", "));
+//     let tupokemon = tuequipo[0];
+//     let IAPokemon = IAequipo[0];
+//     let esTurnoJugador = true;
+//     while (!terminado) {
+//         if (esTurnoJugador) {
+
+//         while (numero > 3 || numero < 1 || (numero == 2 && cura == false) && !terminado) {
+            
+//             if (tupokemon.HP <= 0) {
+//                 console.log("Tu Pokemon se ha debilitado");
+//                 tupokemon.vivo = false;
+                
+//              console.log("Tienes que cambiar de pokemon ")
+//              while (!cambiado) {
+//                 console.log("A que pokemon quieres cambiar?");
+//                 console.log(tuequipo.map(tupokemon => `Nombre: ${tupokemon.Name}, HP: ${tupokemon.HP}/${tupokemon.HPMAX}`));
+//                 let opcionP = readlineSync.question("Un numero del 1 al 3");
+//                 if (tupokemon == tuequipo[opcionP - 1] || tuequipo[opcionP-1].Vivo==false) {
+//                     console.log("Ese pokemon no se puede cambiar")
+//                 } else {
+//                     tupokemon = tuequipo[opcionP - 1];
+//                     cambiado = true;
+//                     console.log("Has cambiado a "+ tupokemon.Name);
+//                 }
+//             }
+//             }
+
+//             console.log("-TU--------------------");
+//             console.log(tupokemon.Name + " " + "HP: " + tupokemon.HP + "/" + tupokemon.HPMAX)
+//             console.log("-----------------------");
+
+//             console.log("-RED-------------------");
+//             console.log(IAPokemon.Name + " " + "HP: " + IAPokemon.HP + "/" + IAPokemon.HPMAX);
+//             console.log("-----------------------");
+
+
+//             console.log("Que quieres hacer");
+//             console.log("1.Atacar");
+//             console.log("2.Curar");
+//             console.log("3.Cambiar");
+//             let cambiado = false;
+//             numero = readlineSync.question('');
+//             numero = parseInt(numero);
+//             switch (numero) {
+//                 case 1:
+//                     jugador = true;
+//                     tupokemon.Attack(IAPokemon, jugador);
+//                     break;
+//                 case 2:
+//                     if (cura == false) {
+//                         console.log("No tienes la cura disponible");
+//                     } else {
+//                         tupokemon.Heal();
+//                         cura = false;
+//                     }
+//                     break;
+//                 case 3:
+                   
+//                     while (!cambiado) {
+//                         console.log("A que pokemon quieres cambiar?");
+//                         console.log(tuequipo.map(tupokemon => `Nombre: ${tupokemon.Name}, HP: ${tupokemon.HP}/${tupokemon.HPMAX}`));
+//                         let opcionP = readlineSync.question("Un numero del 1 al 3");
+//                         if (tupokemon == tuequipo[opcionP - 1]) {
+//                             console.log("Ese pokemon ya esta en combate!")
+//                         } else {
+//                             tupokemon = tuequipo[opcionP - 1];
+//                             cambiado = true;
+//                             console.log("Has cambiado a "+ tupokemon.Name);
+//                         }
+//                     }
+
+//                     break;
+
+//                 default:
+//                     console.log("No es una opcion valida")
+//                     break;
+//             }
+//             console.log("Turno del jugado completado, cambiando a la iA");
+//         esTurnoJugador = false;
+            
+//         }
+//         if (IAPokemon.HP <= 0) {
+//             console.log("El pokemon rival se ha debilitado");
+//             IAPokemon.vivo = false;
+//             let cambiadoIA = false;
+//             while (!cambiadoIA) {
+//                 opcionPIA = Math.floor(Math.random() * 3) + 1;
+//                 if (IAPokemon != IAequipo[opcionPIA - 1]) { 
+//                 IAPokemon = IAequipo[opcionPIA - 1];
+//                 cambiadoIA = true;
+//                 console.log("Tu rival ha cambiado a: "+ IAPokemon.Name)}
+//             }
+//         }
+//     }else{
+//         if (IAPokemon.HP == IAPokemon.HPMAX) {
+//             numeroIA = 1;
+//         } else if (curaIA == true) {
+//             numeroIA = Math.floor(Math.random() * 3) + 1;
+//         } else {
+//             numeroIA = Math.random() < 0.5 ? 1 : 3;
+
+//         }
+//         switch (numeroIA) {
+//             case 1:
+//                 jugador = false;
+//                 IAPokemon.Attack(tupokemon, jugador);
+//                 break;
+//             case 2:
+//                 IAPokemon.Heal();
+//                 curaIA = false;
+//                 break;
+//             case 3:
+//                 let cambiadoIA = false;
+//                 while (!cambiadoIA) {
+//                     opcionPIA = Math.floor(Math.random() * 3) + 1;
+//                     if (IAPokemon != IAequipo[opcionPIA - 1]) { 
+//                     IAPokemon = IAequipo[opcionPIA - 1];
+//                     cambiadoIA = true;
+//                     console.log("Tu rival ha cambiado a: "+ IAPokemon.Name)}
+//                 }
+//                 break;
+//             default:
+//                 break;
+//         }
+//         console.log("Turno de la IA completado, cambiando al jugador");
+//         esTurnoJugador = true;
+//     }
+
+//         if(tuequipo.every(tupokemon => !tupokemon.vivo)){
+//             console.log("Has perdido");
+//             terminado=true;
+//         }
+//         if(IAequipo.every(IAPokemon => !IAPokemon.vivo)){
+//             console.log("Has Ganado")
+//             terminado=true;
+//         }
+//     }
+// }
