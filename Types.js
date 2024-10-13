@@ -16,9 +16,15 @@ const Types = {
   Flying: "Flying",
   Ground: "Ground",
   Dragon: "Dragon",
+  Dark: "Dark"
 };
 
 const efectividades = {
+  [Types.Dark]:{
+    effective: ["Psychic", "Ghost"],
+    lesseffective: ["Fighting", "Fairy"],
+    inmune: [],
+  },
   [Types.Fire]: {
     effective: ["Grass", "Ice", "Bug", "Steel"],
     lesseffective: ["Fire", "Water", "Rock", "Dragon"],

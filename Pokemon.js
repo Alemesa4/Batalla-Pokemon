@@ -38,7 +38,7 @@ if (!falla){
       }
       let randomFactor = 0.85 + Math.random() * (1.0 - 0.85);
       let Damage = Math.floor((this.Attackstat / PokemonIA.Defense) * this.move[opcion - 1].power * randomFactor * multiplicador);
-      console.log("¡" + this.Name + " usó " + this.move[opcion - 1].name + "!");
+      console.log("¡" + this.Name + " usó " + movimientoelegido.name + "!");
       console.log("¡Hizo " + Damage + " de daños!");
       if (efectividades[movimientoelegido.typeM].effective.includes(PokemonIA.type)) {
         console.log("Es super eficaz");
@@ -54,10 +54,15 @@ if (!falla){
         console.log("Tu movimiento ha fallado")
       }
     } else if (!Jugador) {
-      //let opcion = Math.floor(Math.random() * 2) + 1;
+     
       let opcionm=  Math.floor(Math.random() * 2) + 1;
       let movimientoelegido = this.move[opcionm - 1];
-
+      let fallo=Math.floor(Math.random()*100)+1;
+      let falla=false;
+      if(fallo>movimientoelegido.accuracy){
+        falla=true;
+      }
+      if(!falla){
       if (efectividades[movimientoelegido.typeM].effective.includes(PokemonIA.type)) {
         multiplicador = 2;
       } else if (efectividades[movimientoelegido.typeM].lesseffective.includes(PokemonIA.type)) {
@@ -70,8 +75,8 @@ if (!falla){
       }
 
       let randomFactor = 0.85 + Math.random() * (1.0 - 0.85);
-      let Damage = Math.floor((this.Attackstat / PokemonIA.Defense) * this.move[opcionm - 1].power * randomFactor * multiplicador);
-      console.log("¡" + this.Name + " enemigo usó " + this.move[opcionm - 1].name + "!");
+      let Damage = Math.floor((this.Attackstat / PokemonIA.Defense) * movimientoelegido.power * randomFactor * multiplicador);
+      console.log("¡" + this.Name + " enemigo usó " + movimientoelegido.name + "!");
       console.log("¡Hizo " + Damage + " de daños!");
       if (efectividades[movimientoelegido.typeM].effective.includes(PokemonIA.type)) {
         console.log("Es super eficaz");
@@ -84,8 +89,10 @@ if (!falla){
       if (isNaN(PokemonIA.HP) || PokemonIA.HP < 0) {
         PokemonIA.HP = 0;
       }
-    }
+    }else{
+      console.log("El movimiento rival ha fallado")}
   }
+}
   Heal() {
     let cura = 0.5 * this.HPMAX;
     this.HP = this.HP + 0.5 * this.HPMAX;
@@ -95,8 +102,8 @@ if (!falla){
     console.log(
       this.Name + " se ha curado: " + cura + " de vida"
     );
-  }
-}
+  }}
+
 const readlineSync = require("readline-sync");
 
 module.exports = Pokemon;
