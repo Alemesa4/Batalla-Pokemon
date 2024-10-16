@@ -218,14 +218,16 @@ function Batalla3vs3() {
                         break;
                     default:
                         console.log("No es una opción válida");
-                        numero = 0; 
+                        numero = 0;
                         break;
                 }
             }
     
+            // Verificar si el juego ha terminado
             if (IAequipo.every(p => !p.vivo)) {
                 console.log("Has ganado");
                 terminado = true;
+                continue;  // Saltar al siguiente ciclo del bucle principal y finalizar el juego
             }
     
             esTurnoJugador = false;
@@ -234,16 +236,29 @@ function Batalla3vs3() {
             if (IAPokemon.HP <= 0) {
                 console.log("El Pokémon rival se ha debilitado");
                 IAPokemon.vivo = false;
+                if (IAequipo.every(p => !p.vivo)) {
+                    console.log("Has ganado");
+                    terminado = true;
+                    break;
+                }
                 let cambiadoIA = false;
-                while (!cambiadoIA) {
+                while (!cambiadoIA && IAequipo.some(p => p.HP > 0)) {  // Añadida la condición de que el equipo IA tenga al menos un Pokémon con HP > 0
                     let opcionPIA = Math.floor(Math.random() * 3);
                     if (IAequipo[opcionPIA].HP > 0) {
                         IAPokemon = IAequipo[opcionPIA];
+                        IAPokemon.vivo = true; // Marcar el nuevo Pokémon como vivo
                         cambiadoIA = true;
                         console.log("Tu rival ha cambiado a " + IAPokemon.Name);
                     }
                 }
+                if (!cambiadoIA) {
+                    console.log("El equipo rival no tiene más Pokémon disponibles");
+                    terminado = true;
+                    console.log("Has ganado");
+                    break;
+                }
             }
+    
     
             let numeroIA = Math.random() < 0.5 ? 1 : (curaIA && Math.random() < 0.5 ? 2 : 3);
             switch (numeroIA) {
@@ -273,12 +288,11 @@ function Batalla3vs3() {
             if (tuequipo.every(p => !p.vivo)) {
                 console.log("Has perdido");
                 terminado = true;
+                continue;  // Saltar al siguiente ciclo del bucle principal y finalizar el juego
             }
     
             esTurnoJugador = true;
             console.log("Turno de la IA completado, cambiando al jugador");
         }
     }
-    
-    
 }
